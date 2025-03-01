@@ -1,15 +1,13 @@
-// Convert hex string to number array
-function hexToBytes(hex: string): number[] {
-    return Array.from(new Uint8Array(hex.match(/.{1,2}/g)!.map(byte => parseInt(byte, 16))));
+function bytesToHex(bytes: Uint8Array | number[]): string {
+    return Array.from(bytes).map(byte => byte.toString(16).padStart(2, "0")).join("");
 }
 
-// Convert number array to hex string
-function bytesToHex(bytes: number[]): string {
-    return bytes.map(byte => byte.toString(16).padStart(2, "0")).join("");
+function hexToBytes(hex: string): Uint8Array {
+    return new Uint8Array(hex.match(/.{1,2}/g)!.map(byte => parseInt(byte, 16)));
 }
 
 // XOR two byte arrays (truncate to shortest length)
-function xorBytes(a: number[], b: number[]): number[] {
+function xorBytes(a: Uint8Array | number[], b: Uint8Array | number[]): Uint8Array | number[] {
     return a.map((val, i) => val ^ (b[i % b.length] || 0));
 }
 
